@@ -12,21 +12,19 @@ import org.springframework.stereotype.Component;
 public class ValidationAspect {
 
 
-    public static final Logger LOGGER=LoggerFactory.getLogger(ValidationAspect.class);
+    public static final Logger LOGGER = LoggerFactory.getLogger(ValidationAspect.class);
 
 
     @Around("execution (* com.sbproj.springdatarest.service.JobService.getJob(..)) && args(postId)")
-    public Object validateAndUpdate(ProceedingJoinPoint jp,int postId) throws Throwable {
-        if (postId<0) {
+    public Object validateAndUpdate(ProceedingJoinPoint jp, int postId) throws Throwable {
+        if (postId < 0) {
             LOGGER.info("PostId is negative, updating it");
 
-            postId=-postId;
-            LOGGER.info("new Value "+postId);
+            postId = -postId;
+            LOGGER.info("new Value " + postId);
         }
 
-        Object obj=jp.proceed(new Object[] {postId});
-
-
+        Object obj = jp.proceed(new Object[]{postId});
 
         return obj;
     }
